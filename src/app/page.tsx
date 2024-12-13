@@ -191,30 +191,28 @@ export default function TokenPage() {
   }, [txInfo.steel.txHash, txInfo.energy.txHash]);
 
   useEffect(() => {
-    let newMessage = "";
-
     // Steel token status
     let steelMessage = "";
     if (txInfo.steel.jobId) {
-      steelMessage += `Steel Job ID: ${txInfo.steel.jobId}\n`;
+      steelMessage += `Job ID: ${txInfo.steel.jobId}\n`;
     }
     if (txInfo.steel.txHash) {
-      steelMessage += `Steel Transaction Hash: ${txInfo.steel.txHash}\n`;
+      steelMessage += `Tx Hash: ${txInfo.steel.txHash}\n`;
     }
     if (txInfo.steel.txStatus) {
-      steelMessage += `Steel Transaction Status: ${txInfo.steel.txStatus}\n`;
+      steelMessage += `Tx Status: ${txInfo.steel.txStatus}\n`;
     }
 
     // Energy token status
     let energyMessage = "";
     if (txInfo.energy.jobId) {
-      energyMessage += `Energy Job ID: ${txInfo.energy.jobId}\n`;
+      energyMessage += `Job ID: ${txInfo.energy.jobId}\n`;
     }
     if (txInfo.energy.txHash) {
-      energyMessage += `Energy Transaction Hash: ${txInfo.energy.txHash}\n`;
+      energyMessage += `Tx Hash: ${txInfo.energy.txHash}\n`;
     }
     if (txInfo.energy.txStatus) {
-      energyMessage += `Energy Transaction Status: ${txInfo.energy.txStatus}\n`;
+      energyMessage += `Tx Status: ${txInfo.energy.txStatus}\n`;
     }
 
     setMessage({
