@@ -60,7 +60,7 @@ export default function TokenPage() {
   });
 
   useEffect(() => {
-    const connectWallet = async () => {
+    const getAccounts = async () => {
       try {
         const accounts = await (
           window as unknown as MinaWindow
@@ -72,7 +72,7 @@ export default function TokenPage() {
         console.error("Failed to connect wallet:", error);
       }
     };
-    connectWallet();
+    getAccounts();
   }, []);
 
   const handleBuy = async (tokenType: "steel" | "energy") => {
@@ -257,7 +257,7 @@ export default function TokenPage() {
       setEnergyBalance(energy);
     };
     getBalance();
-  }, [userAddress, message]);
+  }, [userAddress, txInfo.steel.txStatus, txInfo.energy.txStatus]);
 
   const handleConnect = async () => {
     const account = await (
