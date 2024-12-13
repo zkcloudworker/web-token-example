@@ -217,11 +217,9 @@ export default function TokenPage() {
       energyMessage += `Energy Transaction Status: ${txInfo.energy.txStatus}\n`;
     }
 
-    newMessage = steelMessage + energyMessage;
-
     setMessage({
-      steel: newMessage,
-      energy: newMessage,
+      steel: steelMessage,
+      energy: energyMessage,
     });
   }, [
     txInfo.steel.jobId,
