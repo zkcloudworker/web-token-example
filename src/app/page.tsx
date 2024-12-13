@@ -23,6 +23,7 @@ import {
 interface MinaWindow extends Window {
   mina?: {
     requestAccounts: () => Promise<string[]>;
+    getAccounts: () => Promise<string[]>;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     sendTransaction: (payload: any) => Promise<any>;
   };
@@ -57,6 +58,22 @@ export default function TokenPage() {
     steel: {},
     energy: {},
   });
+
+  useEffect(() => {
+    const connectWallet = async () => {
+      try {
+        const accounts = await (
+          window as unknown as MinaWindow
+        ).mina?.getAccounts();
+        if (accounts?.[0]) {
+          setUserAddress(accounts[0]);
+        }
+      } catch (error) {
+        console.error("Failed to connect wallet:", error);
+      }
+    };
+    connectWallet();
+  }, []);
 
   const handleBuy = async (tokenType: "steel" | "energy") => {
     setTxInfo((prev) => ({
