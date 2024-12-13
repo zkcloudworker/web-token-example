@@ -81,7 +81,7 @@ export default function TokenPage() {
       [tokenType]: {
         jobId: undefined,
         txHash: undefined,
-        txStatus: undefined,
+        txStatus: "building tx",
       },
     }));
     if (!userAddress) {
@@ -121,7 +121,7 @@ export default function TokenPage() {
       [tokenType]: {
         jobId: proving.jobId,
         txHash: undefined,
-        txStatus: undefined,
+        txStatus: "proving tx",
       },
     }));
   };
