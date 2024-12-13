@@ -185,7 +185,7 @@ export default function TokenPage() {
     };
 
     getTxStatusPolling();
-    const interval = setInterval(getTxStatusPolling, 5000);
+    const interval = setInterval(getTxStatusPolling, 20000);
 
     return () => clearInterval(interval);
   }, [txInfo.steel.txHash, txInfo.energy.txHash]);
