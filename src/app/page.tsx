@@ -172,7 +172,8 @@ export default function TokenPage() {
       const energyTxHash = txInfo.energy.txHash;
 
       if (steelTxHash) {
-        const status = await getTxStatus(steelTxHash);
+        let status = await getTxStatus(steelTxHash);
+        if (status === "unknown") status = "pending";
         if (status) {
           setTxInfo((prev) => ({
             ...prev,
@@ -186,7 +187,8 @@ export default function TokenPage() {
       }
 
       if (energyTxHash) {
-        const status = await getTxStatus(energyTxHash);
+        let status = await getTxStatus(energyTxHash);
+        if (status === "unknown") status = "pending";
         if (status) {
           setTxInfo((prev) => ({
             ...prev,
