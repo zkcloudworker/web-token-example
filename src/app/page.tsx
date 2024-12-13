@@ -347,7 +347,7 @@ export default function TokenPage() {
             <CardFooter className="flex flex-col space-y-4">
               <Button
                 onClick={() => handleBuy("steel")}
-                className="w-full bg-zinc-800 hover:bg-zinc-700"
+                className="w-full bg-zinc-700 hover:bg-zinc-500"
                 disabled={!userAddress}
               >
                 Buy MinaSteel
@@ -418,7 +418,7 @@ export default function TokenPage() {
             <CardFooter className="flex flex-col space-y-4">
               <Button
                 onClick={() => handleBuy("energy")}
-                className="w-full bg-cyan-800 hover:bg-cyan-700"
+                className="w-full bg-cyan-800 hover:bg-cyan-600"
                 disabled={!userAddress}
               >
                 Buy MinaEnergy
