@@ -353,7 +353,7 @@ export default function TokenPage() {
                 Buy MinaSteel
               </Button>
               {message.steel && (
-                <div className="text-sm text-gray-400 break-all">
+                <div className="text-sm text-gray-400 break-all whitespace-pre-line">
                   {message.steel}
                 </div>
               )}
@@ -424,7 +424,7 @@ export default function TokenPage() {
                 Buy MinaEnergy
               </Button>
               {message.energy && (
-                <div className="text-sm text-gray-400 break-all">
+                <div className="text-sm text-gray-400 break-all whitespace-pre-line">
                   {message.energy}
                 </div>
               )}
