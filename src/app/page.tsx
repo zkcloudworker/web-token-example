@@ -100,6 +100,13 @@ export default function TokenPage() {
       amount: Number(amount),
       address: userAddress,
     });
+    if ("error" in tx) {
+      setMessage((prev) => ({
+        ...prev,
+        [tokenType]: tx.error,
+      }));
+      return;
+    }
     const txResult = await (
       window as unknown as MinaWindow
     ).mina?.sendTransaction(tx.walletPayload);

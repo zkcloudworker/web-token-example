@@ -64,16 +64,21 @@ export async function buildBuyTx({
   amount: number;
   tokenType: "steel" | "energy";
 }) {
-  const response = await api.buildTransaction({
-    txType: "buy",
-    offerAddress: tokenType === "steel" ? steelOffer : energyOffer,
-    tokenAddress:
-      tokenType === "steel" ? steelContractAddress : energyContractAddress,
-    amount: Number(amount * 1_000_000_000),
-    sender: address,
-  });
-
-  return response;
+  try {
+    const response = await api.buildTransaction({
+      txType: "buy",
+      offerAddress: tokenType === "steel" ? steelOffer : energyOffer,
+      tokenAddress:
+        tokenType === "steel" ? steelContractAddress : energyContractAddress,
+      amount: Number(amount * 1_000_000_000),
+      sender: address,
+    });
+    return response;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.error(error);
+    return { error: error?.message ?? "Failed to build transaction" };
+  }
 }
 
 export async function proveTx({
