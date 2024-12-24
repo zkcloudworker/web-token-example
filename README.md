@@ -16,17 +16,19 @@ https://github.com/zkcloudworker/web-token-example/blob/main/src/lib/api.ts#L17
 ```typescript
 const steelBalance: number =
   (
-    await api.getBalance({
-      address,
-      tokenAddress: steelContractAddress,
+    await api.getTokenBalance({
+      body: {
+        address,
+        tokenAddress: steelContractAddress,
+      },
     })
-  ).balance ?? 0;
+  ).data?.balance ?? 0;
 ```
 
 ### Using fetch
 
 ```typescript
-const response = await fetch(`https://minatokens.com/api/v1/balance`, {
+const response = await fetch(`https://minatokens.com/api/v1/info/balance`, {
   method: "POST",
   headers: {
     "x-api-key": process.env.MINA_TOKENS_API_KEY!,
@@ -46,14 +48,17 @@ const energyBalance = response.ok ? (await response.json()).balance ?? 0 : 0;
 https://github.com/zkcloudworker/web-token-example/blob/main/src/lib/api.ts#L58
 
 ```typescript
-const response = await api.buildTransaction({
-  txType: "buy",
-  offerAddress: tokenType === "steel" ? steelOffer : energyOffer,
-  tokenAddress:
-    tokenType === "steel" ? steelContractAddress : energyContractAddress,
-  amount: Number(amount * 1_000_000_000),
-  sender: address,
-});
+const response = (
+  await api.buyTokens({
+    body: {
+      offerAddress: tokenType === "steel" ? steelOffer : energyOffer,
+      tokenAddress:
+        tokenType === "steel" ? steelContractAddress : energyContractAddress,
+      amount: Number(amount * 1_000_000_000),
+      sender: address,
+    },
+  })
+).data;
 ```
 
 ## Example of signing transaction
@@ -72,8 +77,12 @@ const signedData = txResult?.signedData;
 https://github.com/zkcloudworker/web-token-example/blob/main/src/lib/api.ts#L79
 
 ```typescript
-const response = await api.proveTransaction({
-  tx,
-  signedData,
-});
+const response = (
+  await api.prove({
+    body: {
+      tx,
+      signedData,
+    },
+  })
+).data;
 ```
