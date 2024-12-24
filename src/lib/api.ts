@@ -29,7 +29,7 @@ export async function getTokensBalance(
         })
       ).data?.balance ?? 0;
 
-    const response = await fetch(`https://minatokens.com/api/v1/balance`, {
+    const response = await fetch(`https://minatokens.com/api/v1/info/balance`, {
       method: "POST",
       headers: {
         "x-api-key": process.env.MINA_TOKENS_API_KEY!,
