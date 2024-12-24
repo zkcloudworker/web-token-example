@@ -100,10 +100,10 @@ export default function TokenPage() {
       amount: Number(amount),
       address: userAddress,
     });
-    if ("error" in tx) {
+    if (!tx || "error" in tx) {
       setMessage((prev) => ({
         ...prev,
-        [tokenType]: tx.error,
+        [tokenType]: tx?.error ?? "Transaction build error",
       }));
       return;
     }
@@ -121,14 +121,16 @@ export default function TokenPage() {
     const proving = await proveTx({ tx, signedData });
     setMessage((prev) => ({
       ...prev,
-      [tokenType]: `Proving transaction, jobId: ${proving.jobId}`,
+      [tokenType]: proving?.jobId
+        ? `Proving transaction, jobId: ${proving.jobId}`
+        : "Failed to prove transaction",
     }));
     setTxInfo((prev) => ({
       ...prev,
       [tokenType]: {
-        jobId: proving.jobId,
+        jobId: proving?.jobId,
         txHash: undefined,
-        txStatus: "proving tx",
+        txStatus: proving?.jobId ? "proving tx" : "Failed to prove transaction",
       },
     }));
   };
@@ -179,7 +181,7 @@ export default function TokenPage() {
       const energyTxHash = txInfo.energy.txHash;
 
       if (steelTxHash) {
-        let status = await getTxStatus(steelTxHash);
+        let status = (await getTxStatus(steelTxHash))?.status;
         if (status === "unknown") status = "pending";
         if (status) {
           setTxInfo((prev) => ({
@@ -194,7 +196,7 @@ export default function TokenPage() {
       }
 
       if (energyTxHash) {
-        let status = await getTxStatus(energyTxHash);
+        let status = (await getTxStatus(energyTxHash))?.status;
         if (status === "unknown") status = "pending";
         if (status) {
           setTxInfo((prev) => ({
@@ -339,7 +341,7 @@ export default function TokenPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm text-gray-300 mb-2 h-[180px] overflow-y-auto">
+                    <p className="text-sm text-gray-300 mb-2 h-[160px] overflow-y-auto">
                       MinaSteel is a fungible token central to the ZeroCraft
                       gaming ecosystem, secured on the Mina Protocol. It
                       represents a rare, premium-grade alloy essential for
@@ -349,6 +351,7 @@ export default function TokenPage() {
                       advance their in-game standing and strength within
                       ZeroCraft&rsquo;s competitive landscape.
                     </p>
+                    <p className="text-sm text-gray-300">Price: 10 MINA</p>
                   </div>
                   <div>
                     <Label htmlFor="steel-amount" className="text-gray-300">
@@ -458,7 +461,7 @@ export default function TokenPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm text-gray-300 mb-2 h-[180px] overflow-y-auto">
+                    <p className="text-sm text-gray-300 mb-2 h-[160px] overflow-y-auto">
                       MinaEnergy is a high-value, fungible token integral to the
                       ZeroCraft ecosystem, harnessed to power advanced spells,
                       magical enhancements, and dynamic in-game abilities. As a
@@ -469,6 +472,7 @@ export default function TokenPage() {
                       rivals, unlock rare enchantments, and sustain their
                       presence in ZeroCraft&rsquo;s vibrant, competitive world.
                     </p>
+                    <p className="text-sm text-gray-300">Price: 25 MINA</p>
                   </div>
                   <div>
                     <Label htmlFor="energy-amount" className="text-gray-300">
