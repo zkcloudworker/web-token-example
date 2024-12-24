@@ -180,7 +180,7 @@ export default function TokenPage() {
       const steelTxHash = txInfo.steel.txHash;
       const energyTxHash = txInfo.energy.txHash;
 
-      if (steelTxHash) {
+      if (steelTxHash && txInfo.steel.txStatus !== "applied") {
         let status = (await getTxStatus(steelTxHash))?.status;
         if (status === "unknown") status = "pending";
         if (status) {
@@ -195,7 +195,7 @@ export default function TokenPage() {
         }
       }
 
-      if (energyTxHash) {
+      if (energyTxHash && txInfo.energy.txStatus !== "applied") {
         let status = (await getTxStatus(energyTxHash))?.status;
         if (status === "unknown") status = "pending";
         if (status) {
@@ -215,7 +215,12 @@ export default function TokenPage() {
     const interval = setInterval(getTxStatusPolling, 20000);
 
     return () => clearInterval(interval);
-  }, [txInfo.steel.txHash, txInfo.energy.txHash]);
+  }, [
+    txInfo.steel.txHash,
+    txInfo.energy.txHash,
+    txInfo.steel.txStatus,
+    txInfo.energy.txStatus,
+  ]);
 
   useEffect(() => {
     // Steel token status
