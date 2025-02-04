@@ -29,17 +29,20 @@ export async function getTokensBalance(
         })
       ).data?.balance ?? 0;
 
-    const response = await fetch(`https://minatokens.com/api/v1/info/balance`, {
-      method: "POST",
-      headers: {
-        "x-api-key": process.env.MINA_TOKENS_API_KEY!,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        address,
-        tokenAddress: energyContractAddress,
-      }),
-    });
+    const response = await fetch(
+      `https://devnet.minatokens.com/api/v1/info/balance`,
+      {
+        method: "POST",
+        headers: {
+          "x-api-key": process.env.MINA_TOKENS_API_KEY!,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address,
+          tokenAddress: energyContractAddress,
+        }),
+      }
+    );
 
     const energyBalance = response.ok
       ? (await response.json()).balance ?? 0
